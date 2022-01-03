@@ -2,12 +2,13 @@ import { User } from './User';
 import { Company } from './Company';
 
 // instructions to every class on how they can be an argument to 'addMarker'
-interface Mappable {
+export interface Mappable {
   content: string;
   location: {
     lat: number;
     lng: number;
   };
+  markerContent(): string;
 }
 
 export class CustomMap {
@@ -31,9 +32,9 @@ export class CustomMap {
         lng: mappable.location.lng,
       },
     });
+
     
-    const content = mappable.content;
-    const infowindow = new google.maps.InfoWindow({ content });
+    const infowindow = new google.maps.InfoWindow({ content: mappable.markerContent() });
     marker.addListener('click', () => {
       infowindow.open(this.googleMap, marker);
     });
